@@ -34,12 +34,11 @@ class HomeViewModel: ViewModel(){
 
     fun saveUserData(userData: UserData):Boolean{
         if (validUserData(userData)) {
-            TODO() //call a fun from repo
+            //call a fun from repo
             return true
         }
         else
         {
-            TODO()
             return false
         }
     }

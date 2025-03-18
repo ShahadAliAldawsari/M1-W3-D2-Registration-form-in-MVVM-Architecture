@@ -122,13 +122,12 @@ fun SignUpScreen(modifier:Modifier=Modifier, viewModel:HomeViewModel, navCtrl:Na
 
         //sign up button
         Button(onClick = {
-            // // THE APP IS CRASHING HEAR IN THE VALIDATION !!
-//            //1- save data "first it will call the validation fun"
-//            val saved = viewModel.saveUserData(UserData(name, email, password, passConf))
-//            //2- if the data valid and saved move to Sign in screen
-//            if (saved) {
-//                navCtrl.navigate(SignIn_Screen())
-//            }
+            //1- save data "first it will call the validation fun"
+            val saved = viewModel.saveUserData(UserData(name, email, password, passConf))
+            //2- if the data valid and saved move to Sign in screen
+            if (saved) {
+                navCtrl.navigate(SignIn_Screen())
+            }
             navCtrl.navigate(SignIn_Screen())
         },
             colors = ButtonDefaults.buttonColors(mainColor)
