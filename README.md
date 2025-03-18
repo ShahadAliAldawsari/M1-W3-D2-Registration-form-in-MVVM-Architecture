@@ -4,8 +4,8 @@ This project is a simple implementation of a Sign-Up and Sign-In application usi
 <h2>Features</h2>
 
 <h3>Sign-Up Screen:</h3>
-- Users can create a new account by providing their name, email, password, and confirming the password.
-- Basic input validation ensures all fields are filled, the email is valid, and passwords match.
+- Users can create a new account by providing their name, email, and password, and confirming the password.
+- Basic input validation ensures all fields are filled out, the email is valid, and the passwords match.
 
 <h3>Sign-In Screen:</h3>
 - Existing users can log in using their email and password.
@@ -20,10 +20,10 @@ This project is a simple implementation of a Sign-Up and Sign-In application usi
 Seamless navigation between the Sign-Up and Sign-In screens using Jetpack Navigation.
 
 <h2>Screenshots</h2>
-<h3>Sign-Up</h3>
+<h3>Sign-Up Screen</h3>
 <img width="180" alt="Image" src="https://github.com/user-attachments/assets/a8d83496-a47a-4909-968e-0f2e202adf69" />
 
-<h3>Sign-Up</h3>
+<h3>Sign-Ip Screen</h3>
 <img width="180" alt="Image" src="https://github.com/user-attachments/assets/b821f866-5b3f-40c5-839f-a27770e82c97" />
 
 <h3>Backages Structure</h3>
@@ -67,8 +67,8 @@ Navigation Tutorial: https://www.youtube.com/watch?v=AIC_OFQ1r3k
 <h2>Using the App</h2>
 <h3>Sign-Up</h3>
 - Navigate to the Sign-Up screen.
-- Enter your name, email, password, and confirm the password.
-- Click the Sign Up button.
+- Enter your name, email, and password, and confirm the password.
+- Click the Sign-Up button.
 If the input is valid, you will be redirected to the Sign-In screen.
 If the input is invalid, appropriate validation messages will be displayed (to be implemented).
 
