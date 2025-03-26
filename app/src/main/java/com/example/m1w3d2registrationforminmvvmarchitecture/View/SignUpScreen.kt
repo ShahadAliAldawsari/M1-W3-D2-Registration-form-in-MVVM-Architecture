@@ -1,6 +1,10 @@
 package com.example.m1w3d2registrationforminmvvmarchitecture.View
 
-import androidx.compose.foundation.background
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -13,7 +17,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -24,33 +27,32 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.TransformOrigin
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.example.m1w3d2registrationforminmvvmarchitecture.Model.SignIn_Screen
+import com.example.m1w3d2registrationforminmvvmarchitecture.Model.SignInScreenNav
 import com.example.m1w3d2registrationforminmvvmarchitecture.Model.UserData
+import com.example.m1w3d2registrationforminmvvmarchitecture.R
 import com.example.m1w3d2registrationforminmvvmarchitecture.ViewModel.HomeViewModel
+import com.example.m1w3d2registrationforminmvvmarchitecture.ui.theme.darkColor
+import com.example.m1w3d2registrationforminmvvmarchitecture.ui.theme.mainColor
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
-fun SignUpScreen(modifier:Modifier=Modifier, viewModel:HomeViewModel, navCtrl:NavController){
+fun SignUpScreen(viewModel:HomeViewModel, navCtrl:NavController){
     var name by remember { mutableStateOf("")}
     var email by remember { mutableStateOf("")}
     var password by remember { mutableStateOf("")}
     var passConf by remember { mutableStateOf("")}
 
-    val mainColor = Color(0xFF7858C0)
-    val darkColor = Color(0xFF432B8A)
 
     Column (
         modifier = Modifier
@@ -60,25 +62,39 @@ fun SignUpScreen(modifier:Modifier=Modifier, viewModel:HomeViewModel, navCtrl:Na
         verticalArrangement = Arrangement.Center
     ){
         //Screen Title
-        Text("Sign Up",
+        Text(stringResource(R.string.sign_up_heading),
             style = MaterialTheme.typography.headlineSmall,
             fontFamily = FontFamily.Serif,
             fontWeight = FontWeight.ExtraBold,
             color = darkColor
         )
 
+        //Adding animation for the image
+        val infiniteTransition = rememberInfiniteTransition(label = "infinite transition")
+        val scale by infiniteTransition.animateFloat(
+            initialValue = 0.7f,
+            targetValue = 0.9f,
+            animationSpec = infiniteRepeatable(tween(2000), RepeatMode.Reverse),
+            label = "scale"
+        )
         //Sign up image
         AsyncImage(
             model = "https://t4.ftcdn.net/jpg/05/58/06/81/360_F_558068185_sZmfyrWuzHTfzLdwJuj1ALQcBtbKAtbA.jpg",
             contentDescription = "sign up image",
             modifier = Modifier.fillMaxWidth()
-        )
+                .graphicsLayer {
+                    scaleX = scale
+                    scaleY = scale
+                    transformOrigin = TransformOrigin.Center },
+
+
+            )
 
         //the name text field
         TextField(
             value = name,
             onValueChange = {name = it},
-            label = {Text("Enter Your Name:", color = darkColor)},
+            label = {Text(stringResource(R.string.name), color = darkColor)},
             modifier = Modifier,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             colors = TextFieldDefaults.colors(mainColor)
@@ -89,7 +105,7 @@ fun SignUpScreen(modifier:Modifier=Modifier, viewModel:HomeViewModel, navCtrl:Na
         TextField(
             value = email,
             onValueChange = {email = it},
-            label = {Text("Enter Your Email:", color = darkColor)},
+            label = {Text(stringResource(R.string.your_email), color = darkColor)},
             modifier = Modifier,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             colors = TextFieldDefaults.colors(mainColor)
@@ -100,7 +116,7 @@ fun SignUpScreen(modifier:Modifier=Modifier, viewModel:HomeViewModel, navCtrl:Na
         TextField(
             value = password,
             onValueChange = {password = it},
-            label = {Text("Enter Your Password:", color = darkColor)},
+            label = {Text(stringResource(R.string.password), color = darkColor)},
             modifier = Modifier,
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
@@ -112,7 +128,7 @@ fun SignUpScreen(modifier:Modifier=Modifier, viewModel:HomeViewModel, navCtrl:Na
         TextField(
             value = passConf,
             onValueChange = {passConf = it},
-            label = {Text("Confirm Your Password:", color = darkColor)},
+            label = {Text(stringResource(R.string.create_account), color = darkColor)},
             modifier = Modifier,
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
@@ -126,15 +142,14 @@ fun SignUpScreen(modifier:Modifier=Modifier, viewModel:HomeViewModel, navCtrl:Na
             val saved = viewModel.saveUserData(UserData(name, email, password, passConf))
             //2- if the data valid and saved move to Sign in screen
             if (saved) {
-                navCtrl.navigate(SignIn_Screen())
+                navCtrl.navigate(SignInScreenNav)
             }
-            navCtrl.navigate(SignIn_Screen())
+            navCtrl.navigate(SignInScreenNav)
         },
             colors = ButtonDefaults.buttonColors(mainColor)
             ){
-            Text("Sign Up")
+            Text(stringResource(R.string.sign_up))
 
         }
-
     }
 }
